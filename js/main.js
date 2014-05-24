@@ -20,16 +20,26 @@
         return MainView.__super__.constructor.apply(this, arguments);
       }
 
-      MainView.prototype.el = $('body');
+      MainView.prototype.el = $('#list');
+
+      MainView.prototype.activeObject = null;
+
+      MainView.prototype.mjau = null;
 
       MainView.prototype.events = {
-        'click button': 'addItem'
+        'click button.add-new': 'addItem',
+        'click button.reset-parent': 'resetParent'
       };
 
       MainView.prototype.initialize = function() {
         console.info('init');
+        this.resetParent();
         this.list = new App.Collections.List;
         return this.list.bind('add', this.renderItem);
+      };
+
+      MainView.prototype.resetParent = function() {
+        return this.activeObject = this.el;
       };
 
       MainView.prototype.addItem = function() {
@@ -38,21 +48,26 @@
         item.set({
           title: 'jaunais item'
         });
+        item.set({
+          position: this.list.nextPosition()
+        });
         return this.list.add(item);
       };
 
       MainView.prototype.renderItem = function(item) {
         var item_view;
         item_view = new App.Views.Item({
-          model: item
+          model: item,
+          parent: this
         });
-        return $(this.el).append(item_view.render().el);
+        return $(this.activeObject).append(item_view.render().el);
       };
 
       return MainView;
 
     })(Backbone.View);
-    return MainView = new App.Views.MainView();
+    MainView = new App.Views.MainView();
+    return Backbone.sync = function(method, model, success, error) {};
   });
 
 }).call(this);

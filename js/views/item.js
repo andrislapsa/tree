@@ -12,15 +12,34 @@
       return Item.__super__.constructor.apply(this, arguments);
     }
 
-    Item.prototype.tagName = 'li';
+    Item.prototype.tagName = 'div';
 
-    Item.prototype.initialize = function() {
+    Item.prototype.events = {
+      'click > input': 'doStuff',
+      'blur input': 'update'
+    };
+
+    Item.prototype.initialize = function(options) {
+      this.parent = options.parent;
       return this.model.bind('change', this.render);
     };
 
     Item.prototype.render = function() {
-      $(this.el).html("heisā " + (this.model.get('title')) + " hopsā");
+      this.input = $('<input/>').val(this.model.get('title'));
+      $(this.el).html(this.input);
       return this;
+    };
+
+    Item.prototype.update = function() {
+      return this.model.save({
+        title: this.input.val()
+      });
+    };
+
+    Item.prototype.doStuff = function() {
+      this.parent.activeObject = this.el;
+      console.info('---');
+      return console.info("" + (this.model.get('position')) + ": " + (this.model.get('title')));
     };
 
     return Item;

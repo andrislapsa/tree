@@ -12,11 +12,8 @@
 
     Item.prototype.defaults = {
       parent: null,
+      position: 0,
       title: ''
-    };
-
-    Item.prototype.ohWow = function() {
-      return alert('indeed');
     };
 
     return Item;

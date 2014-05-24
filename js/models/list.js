@@ -12,6 +12,13 @@
 
     List.prototype.model = App.Models.Item;
 
+    List.prototype.nextPosition = function() {
+      if (!this.length) {
+        return 1;
+      }
+      return this.last().get('position') + 1;
+    };
+
     return List;
 
   })(Backbone.Collection);
