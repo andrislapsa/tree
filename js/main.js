@@ -17,14 +17,16 @@
 
       function MainView() {
         this.renderItem = __bind(this.renderItem, this);
+        this.getObjectParentView = __bind(this.getObjectParentView, this);
         return MainView.__super__.constructor.apply(this, arguments);
       }
 
       MainView.prototype.el = $('#list');
 
-      MainView.prototype.activeObject = null;
-
-      MainView.prototype.mjau = null;
+      MainView.prototype.activeItem = {
+        id: null,
+        view: null
+      };
 
       MainView.prototype.events = {
         'click button.add-new': 'addItem',
@@ -32,26 +34,40 @@
       };
 
       MainView.prototype.initialize = function() {
-        console.info('init');
         this.resetParent();
         this.list = new App.Collections.List;
-        return this.list.bind('add', this.renderItem);
+        this.list.bind('add', this.renderItem);
+        return this.list.fetch();
       };
 
       MainView.prototype.resetParent = function() {
-        return this.activeObject = this.el;
+        return this.activeItem = {
+          id: null,
+          view: this.el
+        };
       };
 
       MainView.prototype.addItem = function() {
-        var item;
-        item = new App.Models.Item;
-        item.set({
-          title: 'jaunais item'
+        return this.list.addNew({
+          title: 'jaunais item',
+          parent_id: this.activeItem.id
         });
-        item.set({
-          position: this.list.nextPosition()
+      };
+
+      MainView.prototype.addChildItem = function() {
+        return this.list.addNew({
+          title: 'jaunais item',
+          parent_id: this.activeItem.id
         });
-        return this.list.add(item);
+      };
+
+      MainView.prototype.getObjectParentView = function(item) {
+        var view;
+        view = $("#object-" + (item.get('parent_id')));
+        if (view.length) {
+          return view;
+        }
+        return $(this.el);
       };
 
       MainView.prototype.renderItem = function(item) {
@@ -60,14 +76,13 @@
           model: item,
           parent: this
         });
-        return $(this.activeObject).append(item_view.render().el);
+        return this.getObjectParentView(item).append(item_view.render().el);
       };
 
       return MainView;
 
     })(Backbone.View);
-    MainView = new App.Views.MainView();
-    return Backbone.sync = function(method, model, success, error) {};
+    return MainView = new App.Views.MainView();
   });
 
 }).call(this);

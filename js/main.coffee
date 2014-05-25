@@ -9,34 +9,43 @@ jQuery ->
 
 		el: $ '#list'
 
-		activeObject: null
-
-		mjau: null
+		activeItem:
+			id: null
+			view: null
 
 		events:
-			'click button.add-new' : 'addItem'
-			'click button.reset-parent' : 'resetParent'
+			'click button.add-new': 'addItem'
+			'click button.reset-parent': 'resetParent'
 
 		initialize: ->
-			console.info 'init'
-
 			@resetParent()
 			@list = new App.Collections.List
 			@list.bind 'add', @renderItem
+			@list.fetch()
 
 		resetParent: ->
-			@activeObject = @el
+			@activeItem =
+				id: null
+				view: @el
 
 		addItem: ->
-			item = new App.Models.Item
-			item.set title: 'jaunais item'
-			item.set position: @list.nextPosition()
-			@list.add item
+			@list.addNew
+				title: 'jaunais item'
+				parent_id: @activeItem.id
+
+		addChildItem: ->
+			@list.addNew
+				title: 'jaunais item'
+				parent_id: @activeItem.id
+
+		getObjectParentView: (item) =>
+			view = $("#object-#{item.get 'parent_id'}");
+			if view.length
+				return view
+			return $(@el) 
 
 		renderItem: (item) =>
 			item_view = new App.Views.Item model: item, parent: @
-			$(@activeObject).append item_view.render().el
+			@getObjectParentView(item).append item_view.render().el
 
 	MainView = new App.Views.MainView()
-
-	Backbone.sync = (method, model, success, error) ->

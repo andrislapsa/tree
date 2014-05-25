@@ -11,8 +11,8 @@
     }
 
     Item.prototype.defaults = {
-      parent: null,
-      position: 0,
+      id: null,
+      parent_id: null,
       title: ''
     };
 

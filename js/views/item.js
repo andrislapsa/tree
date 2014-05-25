@@ -8,6 +8,7 @@
     __extends(Item, _super);
 
     function Item() {
+      this.doStuff = __bind(this.doStuff, this);
       this.render = __bind(this.render, this);
       return Item.__super__.constructor.apply(this, arguments);
     }
@@ -16,17 +17,19 @@
 
     Item.prototype.events = {
       'click > input': 'doStuff',
+      'click > button': 'test',
       'blur input': 'update'
     };
 
     Item.prototype.initialize = function(options) {
       this.parent = options.parent;
-      return this.model.bind('change', this.render);
+      return this.template = _.template($('#item-template').html());
     };
 
     Item.prototype.render = function() {
-      this.input = $('<input/>').val(this.model.get('title'));
-      $(this.el).html(this.input);
+      console.info(this.model.toJSON());
+      this.setElement(this.template(this.model.toJSON()));
+      this.input = $(this.el).find('input');
       return this;
     };
 
@@ -37,9 +40,14 @@
     };
 
     Item.prototype.doStuff = function() {
-      this.parent.activeObject = this.el;
-      console.info('---');
-      return console.info("" + (this.model.get('position')) + ": " + (this.model.get('title')));
+      return this.parent.activeItem = {
+        id: this.model.get('id'),
+        view: this.el
+      };
+    };
+
+    Item.prototype.test = function() {
+      return alert('test');
     };
 
     return Item;

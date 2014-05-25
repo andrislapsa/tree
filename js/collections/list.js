@@ -12,11 +12,27 @@
 
     List.prototype.model = App.Models.Item;
 
-    List.prototype.nextPosition = function() {
+    List.prototype.localStorage = new Store('tree_objects');
+
+    List.prototype.getNewId = function() {
       if (!this.length) {
         return 1;
       }
-      return this.last().get('position') + 1;
+      return this.last().get('id') + 1;
+    };
+
+    List.prototype.addNew = function(data) {
+      var item;
+      item = new App.Models.Item;
+      item.set(_.extend({
+        id: this.getNewId()
+      }, data));
+      this.add(item);
+      return item.save();
+    };
+
+    List.prototype.comparator = function(item) {
+      return item.get('id');
     };
 
     return List;
