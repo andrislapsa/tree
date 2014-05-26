@@ -16,6 +16,10 @@
       title: ''
     };
 
+    Item.prototype.removeItem = function() {
+      return this.destroy();
+    };
+
     return Item;
 
   })(Backbone.Model);

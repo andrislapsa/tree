@@ -8,7 +8,6 @@
     __extends(Item, _super);
 
     function Item() {
-      this.doStuff = __bind(this.doStuff, this);
       this.render = __bind(this.render, this);
       return Item.__super__.constructor.apply(this, arguments);
     }
@@ -16,18 +15,18 @@
     Item.prototype.tagName = 'div';
 
     Item.prototype.events = {
-      'click > input': 'doStuff',
-      'click > button': 'test',
-      'blur input': 'update'
+      'click > .add-child': 'addChild',
+      'click > .remove-item': 'removeItem',
+      'keyup input': 'update'
     };
 
     Item.prototype.initialize = function(options) {
       this.parent = options.parent;
+      this.list = options.list;
       return this.template = _.template($('#item-template').html());
     };
 
     Item.prototype.render = function() {
-      console.info(this.model.toJSON());
       this.setElement(this.template(this.model.toJSON()));
       this.input = $(this.el).find('input');
       return this;
@@ -39,15 +38,16 @@
       });
     };
 
-    Item.prototype.doStuff = function() {
-      return this.parent.activeItem = {
-        id: this.model.get('id'),
-        view: this.el
-      };
+    Item.prototype.addChild = function() {
+      return this.list.addNew({
+        title: 'jaunais item',
+        parent_id: this.model.get('id')
+      });
     };
 
-    Item.prototype.test = function() {
-      return alert('test');
+    Item.prototype.removeItem = function() {
+      this.model.removeItem();
+      return this.remove();
     };
 
     return Item;

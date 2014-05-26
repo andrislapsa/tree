@@ -23,47 +23,25 @@
 
       MainView.prototype.el = $('#list');
 
-      MainView.prototype.activeItem = {
-        id: null,
-        view: null
-      };
-
       MainView.prototype.events = {
-        'click button.add-new': 'addItem',
-        'click button.reset-parent': 'resetParent'
+        'click button.add-new': 'addItem'
       };
 
       MainView.prototype.initialize = function() {
-        this.resetParent();
         this.list = new App.Collections.List;
         this.list.bind('add', this.renderItem);
         return this.list.fetch();
       };
 
-      MainView.prototype.resetParent = function() {
-        return this.activeItem = {
-          id: null,
-          view: this.el
-        };
-      };
-
       MainView.prototype.addItem = function() {
         return this.list.addNew({
-          title: 'jaunais item',
-          parent_id: this.activeItem.id
-        });
-      };
-
-      MainView.prototype.addChildItem = function() {
-        return this.list.addNew({
-          title: 'jaunais item',
-          parent_id: this.activeItem.id
+          title: 'jaunais item'
         });
       };
 
       MainView.prototype.getObjectParentView = function(item) {
         var view;
-        view = $("#object-" + (item.get('parent_id')));
+        view = $(this.el).find("#object-" + (item.get('parent_id')));
         if (view.length) {
           return view;
         }
@@ -74,7 +52,8 @@
         var item_view;
         item_view = new App.Views.Item({
           model: item,
-          parent: this
+          parent: this,
+          list: this.list
         });
         return this.getObjectParentView(item).append(item_view.render().el);
       };

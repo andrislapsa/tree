@@ -4,3 +4,6 @@ class App.Models.Item extends Backbone.Model
 		id: null,
 		parent_id: null
 		title: ''
+
+	removeItem: ->
+		@destroy()
