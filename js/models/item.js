@@ -16,7 +16,28 @@
       title: ''
     };
 
+    Item.prototype.getChildren = function(id) {
+      var children, item, result, _i, _len;
+      result = this.collection.where({
+        parent_id: id
+      });
+      for (_i = 0, _len = result.length; _i < _len; _i++) {
+        item = result[_i];
+        children = this.getChildren(item.id);
+        if (!children.length) {
+          continue;
+        }
+        _.each(children, function(item) {
+          return result.push(item);
+        });
+      }
+      return result;
+    };
+
     Item.prototype.removeItem = function() {
+      _.each(this.getChildren(this.id), function(item) {
+        return item.destroy();
+      });
       return this.destroy();
     };
 
