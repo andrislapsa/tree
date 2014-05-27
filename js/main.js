@@ -34,9 +34,7 @@
       };
 
       MainView.prototype.addItem = function() {
-        return this.list.addNew({
-          title: 'jaunais item'
-        });
+        return this.list.addNew({});
       };
 
       MainView.prototype.getObjectParentView = function(item) {
@@ -51,9 +49,7 @@
       MainView.prototype.renderItem = function(item) {
         var item_view;
         item_view = new App.Views.Item({
-          model: item,
-          parent: this,
-          list: this.list
+          model: item
         });
         return this.getObjectParentView(item).append(item_view.render().el);
       };

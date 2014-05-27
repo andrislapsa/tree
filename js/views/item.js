@@ -15,14 +15,12 @@
     Item.prototype.tagName = 'div';
 
     Item.prototype.events = {
-      'click > .add-child': 'addChild',
-      'click > .remove-item': 'removeItem',
-      'keyup input': 'update'
+      'click > .input-group .add-child': 'addChild',
+      'click > .input-group .remove-item': 'removeItem',
+      'keyup > .input-group input': 'update'
     };
 
     Item.prototype.initialize = function(options) {
-      this.parent = options.parent;
-      this.list = options.list;
       return this.template = _.template($('#item-template').html());
     };
 
@@ -39,8 +37,7 @@
     };
 
     Item.prototype.addChild = function() {
-      return this.list.addNew({
-        title: 'jaunais item',
+      return this.model.collection.addNew({
         parent_id: this.model.get('id')
       });
     };

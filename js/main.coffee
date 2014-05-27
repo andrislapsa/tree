@@ -18,17 +18,15 @@ jQuery ->
 			@list.fetch()
 
 		addItem: ->
-			@list.addNew
-				title: 'jaunais item'
+			@list.addNew {}
 
 		getObjectParentView: (item) =>
-			view = $(@el).find("#object-#{item.get 'parent_id'}");
-			if view.length
-				return view
-			return $(@el)
+			view = $(@el).find "#object-#{item.get 'parent_id'}"
+			return view if view.length
+			$(@el)
 
 		renderItem: (item) =>
-			item_view = new App.Views.Item model: item, parent: @, list: @list
+			item_view = new App.Views.Item model: item
 			@getObjectParentView(item).append item_view.render().el
 
 	MainView = new App.Views.MainView()

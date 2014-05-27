@@ -17,4 +17,4 @@ class App.Collections.List extends Backbone.Collection
 		item.save()
 
 	comparator: (item) ->
-		return item.get 'id'
+		item.get 'id'

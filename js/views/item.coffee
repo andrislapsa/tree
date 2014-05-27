@@ -3,26 +3,24 @@ class App.Views.Item extends Backbone.View
 	tagName: 'div'
 
 	events:
-		'click > .add-child': 'addChild'
-		'click > .remove-item': 'removeItem'
-		'keyup input': 'update'
+		'click > .input-group .add-child': 'addChild'
+		'click > .input-group .remove-item': 'removeItem'
+		'keyup > .input-group input': 'update'
 
 	initialize: (options) ->
-		@parent = options.parent
-		@list = options.list
-		@template = _.template($('#item-template').html())
+		@template = _.template $('#item-template').html()
 
 	render: =>
 		@setElement this.template @model.toJSON()
-		@input = $(@el).find('input');
+		@input = $(@el).find 'input'
 		@
 
 	update: ->
-		@model.save({ title: @input.val() })
+		@model.save
+			title: @input.val()
 
 	addChild: ->
-		@list.addNew
-			title: 'jaunais item'
+		@model.collection.addNew
 			parent_id: @model.get 'id'
 
 	removeItem: ->
