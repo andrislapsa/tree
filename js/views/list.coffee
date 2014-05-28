@@ -4,7 +4,6 @@ class App.Views.List extends Backbone.View
 		'click button.add-new': 'addItem'
 
 	initialize: ->
-		console.log '??'
 		@list = new App.Collections.List
 		@list.bind 'add', @renderItem
 		@list.fetch()
@@ -22,3 +21,4 @@ class App.Views.List extends Backbone.View
 			model: item
 			template: $('#item-template').html()
 		@getObjectParentView(item).append item_view.render().el
+		item_view.input.focus() if App.loaded

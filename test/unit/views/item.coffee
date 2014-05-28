@@ -24,14 +24,14 @@ describe 'Item view', ->
 		view.remove()
 		view = null
 
-	it 'shoud render parent item', ->
-		item.set { id: 1, title: 'Parent 1' }
+	it 'shoud render item', ->
+		item.set { id: 1, title: 'Test item' }
 		view.render()
 
-		expect(view.input.val()).toEqual 'Parent 1'
+		expect(view.input.val()).toEqual 'Test item'
 
 	it 'should update model', ->
-		item.set { id: 1, title: 'Parent 1' }
+		item.set { id: 1, title: 'Test item' }
 		view.render()
 
 		view.input.val('Parent title changed').keyup()
@@ -39,7 +39,7 @@ describe 'Item view', ->
 		expect(item.get 'title').toEqual 'Parent title changed'
 
 	it 'should remove when remove button clicked', ->
-		item.set { id: 1, title: 'Parent 1' }
+		item.set { id: 1, title: 'Test item' }
 		view.render()
 
 		$(view.el).find('.remove-item').click()

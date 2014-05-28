@@ -5,7 +5,7 @@ class App.Views.Item extends Backbone.View
 	events:
 		'click > .input-group .add-child': 'addChild'
 		'click > .input-group .remove-item': 'removeItem'
-		'keyup > .input-group input': 'update'
+		'keyup > .input-group input': 'onChange'
 
 	initialize: (options) ->
 		@template = _.template options.template
@@ -14,6 +14,10 @@ class App.Views.Item extends Backbone.View
 		@setElement this.template @model.toJSON()
 		@input = $(@el).find 'input'
 		@
+
+	onChange: (e) ->
+		@update()
+		@addChild() if e.keyCode == 13 
 
 	update: ->
 		@model.save
