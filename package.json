@@ -2,13 +2,15 @@
   "name": "object-tree",
   "version": "0.0.0",
   "description": "Simple object tree build upon Backbone.js",
-  "main": "js/main.js",
+  "devDependencies": {
+    "karma": "~0.10",
+    "karma-jasmine": "~0.1.0"
+  },
   "scripts": {
     "start": "coffee -c .",
-
     "develop": "coffee -w -c .",
-    
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start test/karma.conf.js",
+    "test-single-run": "karma start test/karma.conf.js --single-run"
   },
   "repository": {
     "type": "git",
