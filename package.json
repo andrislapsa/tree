@@ -1,0 +1,23 @@
+{
+  "name": "object-tree",
+  "version": "0.0.0",
+  "description": "Simple object tree build upon Backbone.js",
+  "main": "js/main.js",
+  "scripts": {
+    "start": "coffee -c .",
+
+    "develop": "coffee -w -c .",
+    
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andrislapsa/tree.git"
+  },
+  "author": "Andris Lapsa <lapsa.andris@me.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrislapsa/tree/issues"
+  },
+  "homepage": "https://github.com/andrislapsa/tree"
+}
