@@ -8,7 +8,7 @@ class App.Views.Item extends Backbone.View
 		'keyup > .input-group input': 'update'
 
 	initialize: (options) ->
-		@template = _.template $('#item-template').html()
+		@template = _.template options.template
 
 	render: =>
 		@setElement this.template @model.toJSON()
@@ -26,3 +26,4 @@ class App.Views.Item extends Backbone.View
 	removeItem: ->
 		@model.removeItem()
 		@remove()
+		@el = null

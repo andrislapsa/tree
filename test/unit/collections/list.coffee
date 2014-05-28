@@ -44,11 +44,11 @@ describe 'List collection', ->
 
 	it 'should remove item without children', ->
 		list.at(2).removeItem()
-		expect(list.length).toEqual(3)
+		expect(list.length).toEqual 3
 
 	it 'should remove item with children', ->
 		list.first().removeItem()
-		expect(list.length).toEqual(2)
+		expect(list.length).toEqual 2
 
 	it 'should have compatator by id', ->
 		expect(list.comparator list.at(0)).toEqual 1
