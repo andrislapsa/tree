@@ -2,3 +2,5 @@
 *.js
 !js/libs/*.js
 !test/libs/*.js
+npm-debug.log
+node_modules/

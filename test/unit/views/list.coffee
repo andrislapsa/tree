@@ -1,5 +1,3 @@
-jasmine.getFixtures().fixturesPath = '/base/test/fixtures/'
-
 describe 'List view', ->
 	view = null
 

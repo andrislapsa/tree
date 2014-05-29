@@ -1,5 +1,3 @@
-jasmine.getFixtures().fixturesPath = '/base/test/fixtures/'
-
 class TestItem extends App.Models.Item
 	url: '#'
 

@@ -3,14 +3,14 @@
   "version": "0.0.0",
   "description": "Simple object tree build upon Backbone.js",
   "devDependencies": {
-    "karma": "~0.10",
-    "karma-jasmine": "~0.1.0"
+    "coffee-script": "~1.7.0",
+    "karma-jasmine": "~0.2.0"
   },
   "scripts": {
-    "start": "coffee -c .",
-    "develop": "coffee -w -c .",
-    "test": "karma start test/karma.conf.js",
-    "test-single-run": "karma start test/karma.conf.js --single-run"
+    "start": "./node_modules/coffee-script/bin/coffee -c .",
+    "develop": "./node_modules/coffee-script/bin/coffee -w -c .",
+    "test": "./node_modules/karma/bin/karma start test/karma.conf.js",
+    "test-single-run": "./node_modules/karma/bin/karma start test/karma.conf.js --single-run"
   },
   "repository": {
     "type": "git",
