@@ -1,11 +1,14 @@
-class App.Models.Item extends Backbone.Model
+define [], () ->
+	class ItemModel extends Backbone.Model
 
-	defaults:
-		id: null,
-		parent_id: null
-		title: ''
+		defaults:
+			id: null,
+			parent_id: null
+			title: ''
 
-	removeItem: ->
-		for item in @collection.where { parent_id: @id }
-			@removeItem.apply item
-		@destroy()
+		removeItem: ->
+			for item in @collection.where { parent_id: @id }
+				@removeItem.apply item
+			@destroy()
+
+	return ItemModel
